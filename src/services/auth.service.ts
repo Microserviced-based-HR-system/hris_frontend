@@ -1,0 +1,60 @@
+import httpClient from 'common/http/httpClient';
+
+interface LoginResponse {
+   token: string;
+   type: string;
+   id: string;
+   username: string;
+   email: string;
+   roles: string[];
+}
+
+export const register = (username: string, email: string, password: string) => {
+   return httpClient.post('/signup', {
+      data: {
+         user: {
+            username: username,
+            email: email,
+            password: password,
+         },
+      },
+   });
+};
+
+export const login = (email: string, password: string) => {
+   return httpClient
+      .post('/login', {
+         data: {
+            user: {
+               email: email,
+               password: password,
+            },
+         },
+      })
+      .then((response) => {
+         console.log(response.data);
+         console.log(response.headers.authorization);
+         localStorage.setItem('user', JSON.stringify(response.data.data));
+         localStorage.setItem('auth_token', JSON.stringify(response.headers.authorization));
+         return response.data as LoginResponse;
+      });
+};
+
+export const logout = () => {
+   localStorage.removeItem('user');
+};
+
+export const getCurrentUser = () => {
+   const userStr = localStorage.getItem('user');
+   const auth_token = localStorage.getItem('auth_token');
+   const currentUser = JSON.parse(userStr);
+
+   if (currentUser && auth_token) {
+      return {
+         user: currentUser.user,
+         token: auth_token,
+      };
+   }
+
+   return null;
+};
