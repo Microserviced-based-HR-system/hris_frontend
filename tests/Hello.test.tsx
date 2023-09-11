@@ -1,11 +1,11 @@
 // inside App.test.tsx
 import { render, screen } from '@testing-library/react';
 
-import App from '../src/App';
+import Hello from '../src/Hello';
 
-describe('App', () => {
+describe('Hello', () => {
    it('should render app', () => {
-      render(<App />);
+      render(<Hello />);
       expect(screen.getByText(/Vite \+ React/i)).toBeInTheDocument();
    });
 });

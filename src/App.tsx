@@ -16,10 +16,10 @@ const App: React.FC = () => {
    const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
 
    useEffect(() => {
-      const user = AuthService.getCurrentUser();
+      const getuser = AuthService.getCurrentUser();
 
-      if (user) {
-         setCurrentUser(user);
+      if (getuser) {
+         setCurrentUser(getuser.user);
       }
 
       EventBus.on('logout', logOut);

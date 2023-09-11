@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import React from 'react';
 import profileImg from '../../assets/profile-picture.jpeg';
 const DropdownMenu = ({ currentUser, logOut }) => {

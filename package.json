@@ -13,6 +13,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.8",
     "autoprefixer": "^10.4.15",
     "axios": "^1.5.0",
     "flowbite": "^1.8.1",
@@ -57,10 +58,10 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-       "npx eslint --fix",
-       "npx prettier --write"
+      "npx eslint --fix",
+      "npx prettier --write"
     ]
- },
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
