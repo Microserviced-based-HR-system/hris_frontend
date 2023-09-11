@@ -2,10 +2,9 @@
 FROM node:18.10-alpine as build
 WORKDIR /reactApp
 ENV PATH /reactApp/node_modules/.bin:$PATH
-COPY ./package.json /reactApp/
+COPY ./package.json ./yarn.lock /reactApp/
 RUN yarn
 COPY . /reactApp
-# RUN CI=true yarn test
 RUN yarn cache clean --force && yarn build
 
 # Stage 1, based on Nginx, to have only the compiled reactApp, ready for production with Nginx
