@@ -19,7 +19,7 @@ const App: React.FC = () => {
       const getuser = AuthService.getCurrentUser();
 
       if (getuser) {
-         setCurrentUser(getuser.user);
+         setCurrentUser(getuser);
       }
 
       EventBus.on('logout', logOut);

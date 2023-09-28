@@ -12,7 +12,7 @@ const Profile: React.FC = () => {
       <div className="card">
          <header className="">
             <h3>
-               <strong>{currentUser.username}</strong> Profile
+               <strong>{currentUser.user.username}</strong> Profile
             </h3>
          </header>
          <p>

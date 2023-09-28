@@ -1,6 +1,7 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import React from 'react';
 import profileImg from '../../assets/profile-picture.jpeg';
+
 const DropdownMenu = ({ currentUser, logOut }) => {
    return (
       <>
@@ -12,7 +13,7 @@ const DropdownMenu = ({ currentUser, logOut }) => {
          >
             <span className="sr-only">Open user menu</span>
             <img className="w-8 h-8 mr-2 rounded-full" src={profileImg} alt="user photo" />
-            {currentUser.user.username
+            {currentUser['user'].username
                .split(' ')
                .map((n) => n[0])
                .join('')

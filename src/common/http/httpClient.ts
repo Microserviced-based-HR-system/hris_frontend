@@ -16,9 +16,10 @@ export interface Request {
 export class HttpClient {
    private httpClient: AxiosInstance;
 
-   constructor() {
+   constructor(baseURL?: string) {
+      this.baseURL = baseURL ?? [import.meta.env.VITE_REACT_API_END_POINT];
       this.httpClient = axios.create({
-         baseURL: import.meta.env.VITE_REACT_API_END_POINT,
+         baseURL: this.baseURL,
          timeout: 60000,
       });
 
@@ -75,4 +76,4 @@ export class HttpClient {
    }
 }
 
-export default new HttpClient();
+export default HttpClient;
