@@ -56,13 +56,9 @@ export const getCurrentUser = () => {
    const auth_token = localStorage.getItem('auth_token');
    const currentUser = JSON.parse(userStr);
 
-   console.log(currentUser);
-
    if (currentUser && auth_token) {
-      return {
-         user: currentUser.user,
-         token: auth_token,
-      };
+      currentUser.user.auth_token = auth_token; // Add auth_token to the user object
+      return currentUser.user;
    }
 
    return null;

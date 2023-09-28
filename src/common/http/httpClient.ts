@@ -14,10 +14,11 @@ export interface Request {
 }
 
 export class HttpClient {
+   private baseURL: string;
    private httpClient: AxiosInstance;
 
    constructor(baseURL?: string) {
-      this.baseURL = baseURL ?? [import.meta.env.VITE_REACT_API_END_POINT];
+      this.baseURL = baseURL ?? import.meta.env.VITE_REACT_API_END_POINT;
       this.httpClient = axios.create({
          baseURL: this.baseURL,
          timeout: 60000,

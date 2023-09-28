@@ -7,8 +7,6 @@ import Login from 'pages/login/Login.page';
 import Register from 'pages/register/Register.page';
 import Home from 'pages/home/Home.page';
 import Profile from 'pages/profile/Profile.page';
-import BoardUser from 'pages/board-user/BoardUser.page';
-import BoardAdmin from 'pages/board-admin/BoardAdmin.page';
 import EventBus from 'common/EventBus';
 import RenderAuthLinks from 'components/renderAuthLinks/RenderAuthLinks';
 
@@ -17,7 +15,6 @@ const App: React.FC = () => {
 
    useEffect(() => {
       const getuser = AuthService.getCurrentUser();
-
       if (getuser) {
          setCurrentUser(getuser);
       }
@@ -57,8 +54,6 @@ const App: React.FC = () => {
                      <Route path="/login" element={<Login />} />
                      <Route path="/register" element={<Register />} />
                      <Route path="/profile" element={<Profile />} />
-                     <Route path="/user" element={<BoardUser />} />
-                     <Route path="/admin" element={<BoardAdmin />} />
                   </Routes>
                </div>
             </div>
