@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: ui
 data:
-  VITE_AUTH_API_END_POINT: http://auth-service.auth-service.svc:80
+  VITE_AUTH_API_END_POINT: http://afbdbdb2611ea407581d148698cd8243-2c7d8a6326316e61.elb.ap-southeast-1.amazonaws.com/api/v1/
   VITE_JOB_API_END_POINT: http://job-service.job-service.svc:80
   VITE_CANDIDATE_API_END_POINT: http://candidate-service.candidate-service.svc:80
   VITE_EMPLOYEE_API_END_POINT: http://employee-service.employee-service.svc:80
