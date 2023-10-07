@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import noLeaveImg from 'assets/no-leaves-booked.png';
 // import { getCurrentUser } from 'services/auth.service';
-
+const authApiEndPoint = import.meta.env.VITE_AUTH_API_END_POINT;
+// const authApiEndPoint = import.meta.env.VITE_AUTH_API_END_POINT;
 const Home: React.FC = () => {
    // const isLoggedIn = getCurrentUser() !== null;
 
@@ -21,14 +22,11 @@ const Home: React.FC = () => {
                   <div className="mt-8">
                      <img src={noLeaveImg} className="w-auto h-24" />
                   </div>
-                  {/* <div className="mb-4 text-gray-600">Fancy some time off?</div>
-                  <a
-                     href={isLoggedIn ? 'myleave' : 'login'}
-                     className="mb-2 book-btn bg-indigo-500 text-gray-100 font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600 shadow-lg"
-                  >
-                     {isLoggedIn ? 'Book Leave' : 'Login to Book Leave'}
-                  </a> */}
                </header>
+               <h1>Vite is running in {import.meta.env.MODE}</h1>
+               <p>Using AuthService api from {authApiEndPoint}</p>
+               {/* <span id="auth-service-endpoint" hidden="hidden"></span>
+               <span id="auth-service-endpoint" hidden="hidden"></span> */}
             </div>
          </div>
       </>

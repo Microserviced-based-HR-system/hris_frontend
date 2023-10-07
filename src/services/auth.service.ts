@@ -4,6 +4,9 @@
 // @ts-nocheck
 import httpClient from 'common/http/httpClient';
 
+const authApiEndPoint = import.meta.env.VITE_AUTH_API_END_POINT;
+const auth_service_httpClient = new httpClient(authApiEndPoint);
+
 interface LoginResponse {
    token: string;
    type: string;
@@ -14,7 +17,7 @@ interface LoginResponse {
 }
 
 export const register = (username: string, email: string, password: string) => {
-   return httpClient.post('/signup', {
+   return auth_service_httpClient.post('/signup', {
       data: {
          user: {
             username: username,
@@ -26,7 +29,7 @@ export const register = (username: string, email: string, password: string) => {
 };
 
 export const login = (email: string, password: string) => {
-   return httpClient
+   return auth_service_httpClient
       .post('/login', {
          data: {
             user: {
@@ -54,10 +57,8 @@ export const getCurrentUser = () => {
    const currentUser = JSON.parse(userStr);
 
    if (currentUser && auth_token) {
-      return {
-         user: currentUser.user,
-         token: auth_token,
-      };
+      currentUser.user.auth_token = auth_token; // Add auth_token to the user object
+      return currentUser.user;
    }
 
    return null;
