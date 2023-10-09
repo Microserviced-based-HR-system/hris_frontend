@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import noLeaveImg from 'assets/no-leaves-booked.png';
-// import { getCurrentUser } from 'services/auth.service';
 const authApiEndPoint = import.meta.env.VITE_AUTH_API_END_POINT;
-// const authApiEndPoint = import.meta.env.VITE_AUTH_API_END_POINT;
+const jobApiEndPoint = import.meta.env.VITE_JOB_API_END_POINT;
 const Home: React.FC = () => {
    // const isLoggedIn = getCurrentUser() !== null;
 
@@ -25,6 +24,7 @@ const Home: React.FC = () => {
                </header>
                <h1>Vite is running in {import.meta.env.MODE}</h1>
                <p>Using AuthService api from {authApiEndPoint}</p>
+               <p>Using JobService api from {jobApiEndPoint}</p>
                {/* <span id="auth-service-endpoint" hidden="hidden"></span>
                <span id="auth-service-endpoint" hidden="hidden"></span> */}
             </div>

@@ -6,7 +6,12 @@ metadata:
     app.kubernetes.io/created-by: group1-nus
     app.kubernetes.io/type: app
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   selector:
     matchLabels:
       app.kubernetes.io/name: ui
@@ -26,18 +31,15 @@ spec:
     spec:
       serviceAccountName: ui
       containers:
-        - name: ui
-          # env:
-          #   - name: VITE_AUTH_API_END_POINT
-          #     value: http://afbdbdb2611ea407581d148698cd8243-2c7d8a6326316e61.elb.ap-southeast-1.amazonaws.com/api/v1/
-          envFrom:
-            - configMapRef:
-                name: ui
-          image: 876708361421.dkr.ecr.ap-southeast-1.amazonaws.com/hris_frontend:v1
-          imagePullPolicy: Always
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          resources: {}
+      - name: ui
+        envFrom:
+        - configMapRef:
+            name: ui
+        image: 876708361421.dkr.ecr.ap-southeast-1.amazonaws.com/hris_frontend:v1
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        resources: {}
       restartPolicy: Always
