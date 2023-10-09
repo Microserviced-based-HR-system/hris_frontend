@@ -6,7 +6,12 @@ metadata:
     app.kubernetes.io/created-by: group1-nus
     app.kubernetes.io/type: app
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   selector:
     matchLabels:
       app.kubernetes.io/name: ui
