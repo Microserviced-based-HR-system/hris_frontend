@@ -1,18 +1,19 @@
+import IDepartment from 'types/department.type';
 export default interface IEmployee {
-   id?: string | null;
+   employeeId?: string | null;
    fullName: string;
    email: string;
-   contactNumber: string;
-   dateOfBirth: string;
-   address: string;
+   companyId: number;
    departmentId: string;
-   departmentName: string;
-   departHeadId: string;
-   departHeadFullName: string;
-   employmentStartDate: string;
-   employmentEndDate: string | null;
-   projectId: string | null;
-   projectName: string | null;
-   roles: string[];
-   username: string;
+   address: string;
+   contactNumber: string;
+   dob: string;
+   startDate: string;
+   endDate: string;
+   jobGradeId: string;
+   bankAccount: string;
+   salary: number;
+   userId: string;
+   empRoles: Array<string>;
+   department: IDepartment;
 }

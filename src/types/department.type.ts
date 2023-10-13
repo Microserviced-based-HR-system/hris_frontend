@@ -1,7 +1,6 @@
 export default interface IDepartment {
-   id?: string | null;
-   name: string;
-   departHeadId: string;
-   departHeadFullName: string;
-   details: string;
+   departmentId?: string | null;
+   companyId: number;
+   departmentName: string;
+   departmentDesc: string;
 }

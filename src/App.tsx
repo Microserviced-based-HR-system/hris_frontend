@@ -9,6 +9,11 @@ import Home from 'pages/home/Home.page';
 import Profile from 'pages/profile/Profile.page';
 import EventBus from 'common/EventBus';
 import RenderAuthLinks from 'components/renderAuthLinks/RenderAuthLinks';
+import AllEmployees from 'pages/employee/AllEmployees.page';
+import DetailEmployee from 'pages/employee/DetailEmployee.page';
+import EditEmployee from 'pages/employee/EditEmployee.page';
+import NewEmployeeForm from 'pages/employee/NewEmployeeForm.page';
+import DeptEmployees from 'pages/employee/DeptEmployees.page';
 
 const App: React.FC = () => {
    const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
@@ -54,6 +59,11 @@ const App: React.FC = () => {
                      <Route path="/login" element={<Login />} />
                      <Route path="/register" element={<Register />} />
                      <Route path="/profile" element={<Profile />} />
+                     <Route path="/employees" element={<AllEmployees />} />
+                     <Route path="/detail_employee" element={<DetailEmployee />} />
+                     <Route path="/new_employee" element={<NewEmployeeForm />} />
+                     <Route path="/edit_employee" element={<EditEmployee />} />
+                     <Route path="/department/employees" element={<DeptEmployees />} />
                   </Routes>
                </div>
             </div>
