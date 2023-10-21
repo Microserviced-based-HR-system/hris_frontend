@@ -15,6 +15,8 @@ import EditEmployee from 'pages/employee/EditEmployee.page';
 import NewEmployeeForm from 'pages/employee/NewEmployeeForm.page';
 import DeptEmployees from 'pages/employee/DeptEmployees.page';
 
+import Candidate from 'pages/candidate/candidateprofile';
+
 const App: React.FC = () => {
    const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
 
@@ -59,6 +61,7 @@ const App: React.FC = () => {
                      <Route path="/login" element={<Login />} />
                      <Route path="/register" element={<Register />} />
                      <Route path="/profile" element={<Profile />} />
+                     <Route path="/candidate" element={<Candidate />} />
                      <Route path="/employees" element={<AllEmployees />} />
                      <Route path="/detail_employee" element={<DetailEmployee />} />
                      <Route path="/new_employee" element={<NewEmployeeForm />} />
