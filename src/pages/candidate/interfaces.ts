@@ -29,3 +29,6 @@ export interface ICandidateProfile {
    educationDetails: IEducationDetail[];
    jobPreferences: IJobPreference[];
 }
+
+export const CANDIDATE_SERVICE =
+   'http://candidate-service-elb-75ad0e5732fe6e19.elb.ap-southeast-1.amazonaws.com';
