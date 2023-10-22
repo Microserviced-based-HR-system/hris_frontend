@@ -6,7 +6,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { get } from 'lodash';
 import { ColDef, GridReadyEvent } from 'ag-grid-community';
-import { ICandidateProfile, IWorkExperience } from './interfaces';
+import { CANDIDATE_SERVICE, ICandidateProfile, IWorkExperience } from './interfaces';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
 const WorkExperienceGrid = () => {
@@ -31,7 +31,7 @@ const WorkExperienceGrid = () => {
    const queryName = 'candidate';
 
    const client = new ApolloClient({
-      uri: 'http://localhost:8080/api/candidate/graphql',
+      uri: CANDIDATE_SERVICE + '/api/candidate/graphql',
       cache: new InMemoryCache(),
    });
    const onGridReady = useCallback((params: GridReadyEvent) => {

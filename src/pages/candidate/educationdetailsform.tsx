@@ -7,6 +7,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { get } from 'lodash';
+import { CANDIDATE_SERVICE } from './interfaces';
 
 const EducationDetailsForm: React.FC = () => {
    const [loading, setLoading] = useState<boolean>(false);
@@ -37,7 +38,7 @@ const EducationDetailsForm: React.FC = () => {
    });
 
    const client = new ApolloClient({
-      uri: 'http://localhost:8080/api/candidate/graphql',
+      uri: CANDIDATE_SERVICE + '/api/candidate/graphql',
       cache: new InMemoryCache(),
    });
    const handleCandidate = (formValue: {

@@ -6,9 +6,8 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { get } from 'lodash';
 import { ColDef, GridReadyEvent } from 'ag-grid-community';
-import { ICandidateProfile, IEducationDetail } from './interfaces';
+import { CANDIDATE_SERVICE, ICandidateProfile, IEducationDetail } from './interfaces';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-
 const EducationDetailsGrid = () => {
    const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
    const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
@@ -30,7 +29,7 @@ const EducationDetailsGrid = () => {
    const queryName = 'candidate';
 
    const client = new ApolloClient({
-      uri: 'http://localhost:8080/api/candidate/graphql',
+      uri: CANDIDATE_SERVICE + '/api/candidate/graphql',
       cache: new InMemoryCache(),
    });
    const onGridReady = useCallback((params: GridReadyEvent) => {
