@@ -7,7 +7,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import React, { useState, useEffect } from 'react';
-import { getJobById, createApplication } from 'services/job.service';
+import { getJobById } from 'services/job.service';
+// import { createApplication } from 'services/job.service';
 import IJob from 'types/employee.type';
 
 const Job: React.FC<{ id }> = ({ id }) => {
@@ -25,23 +26,24 @@ const Job: React.FC<{ id }> = ({ id }) => {
 
    const handleCreateApplication = (event) => {
       event.preventDefault();
+      alert('application is submitted');
 
-      createApplication(job.id).then(
-         (response) => {
-            if ((response as { message: string }).message == 'SUCCESS') {
-               if (confirm(`Apply Job success`)) {
-                  window.location.reload();
-               }
-            }
-         },
-         (error) => {
-            const resMessage =
-               (error.response && error.response.data && error.response.data.message) ||
-               error.message ||
-               error.toString();
-            console.log(resMessage);
-         },
-      );
+      // createApplication(job.id).then(
+      //    (response) => {
+      //       if ((response as { message: string }).message == 'SUCCESS') {
+      //          if (confirm(`Apply Job success`)) {
+      //             window.location.reload();
+      //          }
+      //       }
+      //    },
+      //    (error) => {
+      //       const resMessage =
+      //          (error.response && error.response.data && error.response.data.message) ||
+      //          error.message ||
+      //          error.toString();
+      //       console.log(resMessage);
+      //    },
+      // );
    };
 
    const handleClosedApplication = (event) => {
