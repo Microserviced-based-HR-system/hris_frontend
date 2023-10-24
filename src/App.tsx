@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import './App.css';
 import * as AuthService from './services/auth.service';
 import IUser from './types/user.type';
@@ -9,7 +9,7 @@ import Home from 'pages/home/Home.page';
 import Profile from 'pages/profile/Profile.page';
 import EventBus from 'common/EventBus';
 import RenderAuthLinks from 'components/renderAuthLinks/RenderAuthLinks';
-
+import Job from 'pages/job/Job.page';
 import Candidate from 'pages/candidate/candidateprofile';
 
 const App: React.FC = () => {
@@ -31,6 +31,12 @@ const App: React.FC = () => {
    const logOut = () => {
       AuthService.logout();
       setCurrentUser(undefined);
+   };
+
+   const JobById = () => {
+      const { id } = useParams<{ id: string }>();
+
+      return <Job id={id} />;
    };
 
    return (
@@ -57,6 +63,7 @@ const App: React.FC = () => {
                      <Route path="/register" element={<Register />} />
                      <Route path="/profile" element={<Profile />} />
                      <Route path="/candidate" element={<Candidate />} />
+                     <Route path="/jobs/:id" element={<JobById />} />
                   </Routes>
                </div>
             </div>
