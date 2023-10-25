@@ -9,7 +9,7 @@
 import React, { useState, useEffect } from 'react';
 import { getJobById } from 'services/job.service';
 // import { createApplication } from 'services/job.service';
-import IJob from 'types/employee.type';
+import IJob from 'types/job.type';
 
 const Job: React.FC<{ id }> = ({ id }) => {
    const [job, setJob] = useState<IJob>({});
@@ -24,27 +24,27 @@ const Job: React.FC<{ id }> = ({ id }) => {
       fetchJob();
    }, [id]);
 
-   const handleCreateApplication = (event) => {
-      event.preventDefault();
-      alert('application is submitted');
+   //  const handleCreateApplication = (event) => {
+   //     event.preventDefault();
+   //     alert('application is submitted');
 
-      // createApplication(job.id).then(
-      //    (response) => {
-      //       if ((response as { message: string }).message == 'SUCCESS') {
-      //          if (confirm(`Apply Job success`)) {
-      //             window.location.reload();
-      //          }
-      //       }
-      //    },
-      //    (error) => {
-      //       const resMessage =
-      //          (error.response && error.response.data && error.response.data.message) ||
-      //          error.message ||
-      //          error.toString();
-      //       console.log(resMessage);
-      //    },
-      // );
-   };
+   //     // createApplication(job.id).then(
+   //     //    (response) => {
+   //     //       if ((response as { message: string }).message == 'SUCCESS') {
+   //     //          if (confirm(`Apply Job success`)) {
+   //     //             window.location.reload();
+   //     //          }
+   //     //       }
+   //     //    },
+   //     //    (error) => {
+   //     //       const resMessage =
+   //     //          (error.response && error.response.data && error.response.data.message) ||
+   //     //          error.message ||
+   //     //          error.toString();
+   //     //       console.log(resMessage);
+   //     //    },
+   //     // );
+   //  };
 
    const handleClosedApplication = (event) => {
       event.preventDefault();
@@ -82,14 +82,15 @@ const Job: React.FC<{ id }> = ({ id }) => {
                         Apply
                      </button>
                   ) : (
-                     <button
-                        onClick={handleCreateApplication}
-                        type="submit"
-                        className="bg-indigo-500 text-gray-100 p-3 font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600"
-                        style={{ border: '2px solid', width: '100px', float: 'right' }}
-                     >
-                        Apply
-                     </button>
+                     <a href={`/jobs/${job.id}/application`}>
+                        <button
+                           type="submit"
+                           className="bg-indigo-500 text-gray-100 p-3 font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600"
+                           style={{ border: '2px solid', width: '100px', float: 'right' }}
+                        >
+                           Apply
+                        </button>
+                     </a>
                   )}
                </div>
             </div>
