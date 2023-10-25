@@ -10,6 +10,7 @@ import Profile from 'pages/profile/Profile.page';
 import EventBus from 'common/EventBus';
 import RenderAuthLinks from 'components/renderAuthLinks/RenderAuthLinks';
 import Job from 'pages/job/Job.page';
+import JobApplication from 'pages/job/JobApplication';
 import Candidate from 'pages/candidate/candidateprofile';
 
 const App: React.FC = () => {
@@ -64,6 +65,7 @@ const App: React.FC = () => {
                      <Route path="/profile" element={<Profile />} />
                      <Route path="/candidate" element={<Candidate />} />
                      <Route path="/jobs/:id" element={<JobById />} />
+                     <Route path="/jobs/:id/application" element={<JobApplication />} />
                   </Routes>
                </div>
             </div>
