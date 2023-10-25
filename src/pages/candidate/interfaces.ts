@@ -31,4 +31,4 @@ export interface ICandidateProfile {
 }
 
 export const CANDIDATE_SERVICE =
-   'http://candidate-service-elb-75ad0e5732fe6e19.elb.ap-southeast-1.amazonaws.com';
+   'http://a41866c1e8daa4078be0f25bcd61be4e-1321747920.ap-southeast-1.elb.amazonaws.com';
