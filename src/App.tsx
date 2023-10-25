@@ -10,6 +10,7 @@ import Profile from 'pages/profile/Profile.page';
 import EventBus from 'common/EventBus';
 import RenderAuthLinks from 'components/renderAuthLinks/RenderAuthLinks';
 import Job from 'pages/job/Job.page';
+import JobApplication from 'pages/job/JobApplication';
 import AllEmployees from 'pages/employee/AllEmployees.page';
 import DetailEmployee from 'pages/employee/DetailEmployee.page';
 import EditEmployee from 'pages/employee/EditEmployee.page';
@@ -70,6 +71,7 @@ const App: React.FC = () => {
                      <Route path="/profile" element={<Profile />} />
                      <Route path="/candidate" element={<Candidate />} />
                      <Route path="/jobs/:id" element={<JobById />} />
+                     <Route path="/jobs/:id/application" element={<JobApplication />} />
                      <Route path="/employees" element={<AllEmployees />} />
                      <Route path="/detail_employee" element={<DetailEmployee />} />
                      <Route path="/new_employee" element={<NewEmployeeForm />} />
