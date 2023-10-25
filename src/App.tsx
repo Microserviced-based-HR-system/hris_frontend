@@ -10,6 +10,8 @@ import Profile from 'pages/profile/Profile.page';
 import EventBus from 'common/EventBus';
 import RenderAuthLinks from 'components/renderAuthLinks/RenderAuthLinks';
 
+import Candidate from 'pages/candidate/candidateprofile';
+
 const App: React.FC = () => {
    const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
 
@@ -54,6 +56,7 @@ const App: React.FC = () => {
                      <Route path="/login" element={<Login />} />
                      <Route path="/register" element={<Register />} />
                      <Route path="/profile" element={<Profile />} />
+                     <Route path="/candidate" element={<Candidate />} />
                   </Routes>
                </div>
             </div>
