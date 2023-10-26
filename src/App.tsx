@@ -16,7 +16,6 @@ import DetailEmployee from 'pages/employee/DetailEmployee.page';
 import EditEmployee from 'pages/employee/EditEmployee.page';
 import NewEmployeeForm from 'pages/employee/NewEmployeeForm.page';
 import DeptEmployees from 'pages/employee/DeptEmployees.page';
-
 import Candidate from 'pages/candidate/candidateprofile';
 import CandidateListing from 'pages/candidate/candidatelisting';
 
