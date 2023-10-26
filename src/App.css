@@ -93,3 +93,8 @@ label {
 .page-item{
   cursor: pointer;
 }
+
+.job_stage{
+  height: 500px !important;
+  background-color: #F4F5F7;
+}

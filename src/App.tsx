@@ -13,6 +13,7 @@ import Job from 'pages/job/Job.page';
 import JobApplication from 'pages/job/JobApplication';
 import Candidate from 'pages/candidate/candidateprofile';
 import CandidateListing from 'pages/candidate/candidatelisting';
+import CandidatePipeline from 'pages/candidate-pipeline/CandidatePipeline.page';
 
 const App: React.FC = () => {
    const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
@@ -68,6 +69,7 @@ const App: React.FC = () => {
                      <Route path="/jobs/:id" element={<JobById />} />
                      <Route path="/jobs/:id/application" element={<JobApplication />} />
                      <Route path="/candidatelist" element={<CandidateListing />} />
+                     <Route path="/myjobs" element={<CandidatePipeline />} />
                   </Routes>
                </div>
             </div>
