@@ -13,8 +13,8 @@ import Job from 'pages/job/Job.page';
 import JobApplication from 'pages/job/JobApplication';
 import AllEmployees from 'pages/employee/AllEmployees.page';
 import DetailEmployee from 'pages/employee/DetailEmployee.page';
-import EditEmployee from 'pages/employee/EditEmployee.page';
-import NewEmployeeForm from 'pages/employee/NewEmployeeForm.page';
+// import EditEmployee from 'pages/employee/EditEmployee.page';
+// import NewEmployeeForm from 'pages/employee/NewEmployeeForm.page';
 import DeptEmployees from 'pages/employee/DeptEmployees.page';
 import Candidate from 'pages/candidate/candidateprofile';
 import CandidateListing from 'pages/candidate/candidatelisting';
@@ -77,8 +77,8 @@ const App: React.FC = () => {
                      <Route path="/myjobs" element={<CandidatePipeline />} />
                      <Route path="/employees" element={<AllEmployees />} />
                      <Route path="/detail_employee" element={<DetailEmployee />} />
-                     <Route path="/new_employee" element={<NewEmployeeForm />} />
-                     <Route path="/edit_employee" element={<EditEmployee />} />
+                     {/* <Route path="/new_employee" element={<NewEmployeeForm />} />
+                     <Route path="/edit_employee" element={<EditEmployee />} /> */}
                      <Route path="/department/employees" element={<DeptEmployees />} />
                   </Routes>
                </div>
