@@ -4,11 +4,12 @@
 // @ts-nocheck
 import httpClient from 'common/http/httpClient';
 import authHeader from './auth-header';
-const jobApiEndPoint = import.meta.env.VITE_JOB_API_END_POINT;
-const client = new httpClient(jobApiEndPoint);
+
+const client = new httpClient(
+   'http://job-service-elb-de53cd8b61f351ee.elb.ap-southeast-1.amazonaws.com/api/v1/',
+);
 
 export const getJobList = () => {
-   alert('endpoint' + jobApiEndPoint);
    return client
       .get('/jobs', { headers: authHeader() })
       .then((response) => response.data)

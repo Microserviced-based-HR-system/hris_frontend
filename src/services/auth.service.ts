@@ -4,8 +4,9 @@
 // @ts-nocheck
 import httpClient from 'common/http/httpClient';
 
-const authApiEndPoint = import.meta.env.VITE_AUTH_API_END_POINT;
-const auth_service_httpClient = new httpClient(authApiEndPoint);
+const auth_service_httpClient = new httpClient(
+   'http://auth-service-alb-d3a042cd7fba83f9.elb.ap-southeast-1.amazonaws.com/api/v1/',
+);
 
 interface LoginResponse {
    token: string;
