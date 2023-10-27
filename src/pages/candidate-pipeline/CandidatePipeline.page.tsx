@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import applicationData from 'common/helpers/applicationData.ts';
-import { IApplication } from 'types/application.type';
+import IApplication from 'types/application.type';
 
 const CandidatePipeline: React.FC = () => {
-   const [jobs, setJobs] = useState<IApplication>(applicationData);
+   const [jobs, setJobs] = useState<IApplication[]>(applicationData);
 
    const borderColors = {
       applied: 'border-b-4 border-blue-500',
@@ -23,7 +23,12 @@ const CandidatePipeline: React.FC = () => {
             { status: 'jobOffered', title: 'Job Offered' },
          ].map((category) => (
             <div key={category.status} className="p-0 card job_stage">
-               <div className={`text-l p-3  ${borderColors[category.status]}`}>
+               {/* <div className={`text-l p-3  ${borderColors[category.status]}`}> */}
+               <div
+                  className={`text-xl p-3 ${
+                     borderColors[category.status as keyof typeof borderColors]
+                  }`}
+               >
                   {category.title}
                </div>
 
