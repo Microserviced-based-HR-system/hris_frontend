@@ -2,23 +2,22 @@ import React, { useState } from 'react';
 import applicationData from 'common/helpers/applicationData.ts';
 import * as AuthService from '../../services/auth.service';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import { CANDIDATE_SERVICE, ICandidateProfile } from 'pages/candidate/interfaces';
+import { CANDIDATE_SERVICE, ICandidateProfile, IJob } from 'pages/candidate/interfaces';
 import { get } from 'lodash';
-import IJob from 'types/job.type';
 
 const CandidatePipeline: React.FC = () => {
    const currentUser = AuthService.getCurrentUser();
    const queryName = 'candidate';
-   const filters = [{ filterField: 'email', filterText: currentUser.email }];
+   const filters =
+      currentUser.username === 'admin'
+         ? []
+         : [{ filterField: 'email', filterText: currentUser.email }];
 
    const client = new ApolloClient({
       uri: CANDIDATE_SERVICE + '/api/candidate/graphql',
       cache: new InMemoryCache(),
    });
 
-   if (currentUser) {
-      console.log(currentUser.email);
-   }
    {
       client
          .query({
@@ -56,24 +55,45 @@ const CandidatePipeline: React.FC = () => {
                result.data.graphqlClient.fetch.data,
             ) as ICandidateProfile[];
 
-            const applicationData: IJob[] = [];
-
-            list.at(0)?.jobs.forEach((job) => {
-               const j: IJob = {
-                  id: job.id,
-                  companyId: job.company_id,
-                  title: job.title,
-                  jobType: job.job_type,
-                  description: job.description,
-                  requirements: job.requirements,
-                  location: job.location,
-                  noOfVacancies: 1,
-                  status: job.status,
-               };
-               applicationData.push(j);
-            });
-
-            setJobs(applicationData);
+            if (currentUser.username === 'admin') {
+               console.log(list);
+               const applicationData: IJob[] = [];
+               list.forEach((candidate) => {
+                  candidate.jobs?.forEach((job) => {
+                     console.log(candidate.email);
+                     const j: IJob = {
+                        id: job.id,
+                        company_id: job.company_id,
+                        title: job.title,
+                        job_type: job.job_type,
+                        description: job.description,
+                        requirements: job.requirements,
+                        location: job.location,
+                        status: job.status,
+                        candidate: candidate.email,
+                     };
+                     applicationData.push(j);
+                  });
+               });
+               setJobs(applicationData);
+            } else {
+               const applicationData: IJob[] = [];
+               list.at(0)?.jobs.forEach((job) => {
+                  const j: IJob = {
+                     id: job.id,
+                     company_id: job.company_id,
+                     title: job.title,
+                     job_type: job.job_type,
+                     description: job.description,
+                     requirements: job.requirements,
+                     location: job.location,
+                     status: job.status,
+                     candidate: '',
+                  };
+                  applicationData.push(j);
+               });
+               setJobs(applicationData);
+            }
          });
    }
 
@@ -114,7 +134,12 @@ const CandidatePipeline: React.FC = () => {
                            key={job.id}
                            className="p-4 border rounded-md shadow-md bg-white dark:text-white"
                         >
-                           <p className="">{job.title}</p>
+                           <p className="">
+                              {' '}
+                              {currentUser.username === 'admin'
+                                 ? job.candidate + ', ' + job.title
+                                 : job.title}{' '}
+                           </p>
                            {/* Add additional job information here */}
                         </div>
                      ))}
