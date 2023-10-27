@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import applicationData from 'common/helpers/applicationData.ts';
 import * as AuthService from '../../services/auth.service';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import { CANDIDATE_SERVICE, ICandidateProfile } from 'pages/candidate/interfaces';
+import { CANDIDATE_SERVICE, ICandidateProfile, IJob } from 'pages/candidate/interfaces';
 import { get } from 'lodash';
-import IJob from 'types/job.type';
 
 const CandidatePipeline: React.FC = () => {
    const currentUser = AuthService.getCurrentUser();
@@ -64,13 +63,12 @@ const CandidatePipeline: React.FC = () => {
                      console.log(candidate.email);
                      const j: IJob = {
                         id: job.id,
-                        companyId: job.company_id,
+                        company_id: job.company_id,
                         title: job.title,
-                        jobType: job.job_type,
+                        job_type: job.job_type,
                         description: job.description,
                         requirements: job.requirements,
                         location: job.location,
-                        noOfVacancies: 1,
                         status: job.status,
                         candidate: candidate.email,
                      };
@@ -83,15 +81,14 @@ const CandidatePipeline: React.FC = () => {
                list.at(0)?.jobs.forEach((job) => {
                   const j: IJob = {
                      id: job.id,
-                     companyId: job.company_id,
+                     company_id: job.company_id,
                      title: job.title,
-                     jobType: job.job_type,
+                     job_type: job.job_type,
                      description: job.description,
                      requirements: job.requirements,
                      location: job.location,
-                     noOfVacancies: 1,
                      status: job.status,
-                     candidate: list.at(0) ? list.at(0)?.email : '',
+                     candidate: '',
                   };
                   applicationData.push(j);
                });
