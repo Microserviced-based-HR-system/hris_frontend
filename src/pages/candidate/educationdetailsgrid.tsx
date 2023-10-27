@@ -8,6 +8,7 @@ import { get } from 'lodash';
 import { ColDef, GridReadyEvent } from 'ag-grid-community';
 import { CANDIDATE_SERVICE, ICandidateProfile, IEducationDetail } from './interfaces';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import * as AuthService from '../../services/auth.service';
 const EducationDetailsGrid = () => {
    const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
    const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
@@ -25,13 +26,15 @@ const EducationDetailsGrid = () => {
          cellDataType: false,
       };
    }, []);
-
+   const currentUser = AuthService.getCurrentUser();
    const queryName = 'candidate';
+   const filters = [{ filterField: 'email', filterText: currentUser.email }];
 
    const client = new ApolloClient({
       uri: CANDIDATE_SERVICE + '/api/candidate/graphql',
       cache: new InMemoryCache(),
    });
+
    const onGridReady = useCallback((params: GridReadyEvent) => {
       console.log(params);
       client
@@ -42,7 +45,10 @@ const EducationDetailsGrid = () => {
                     fetch(
                         requestForm: {
                             apiName: "${queryName}"
-                            payload:"{'pageSize':5,'pageIndex':0}"
+                            payload:"{'filters':${JSON.stringify(filters).replace(
+                               /"/g,
+                               "'",
+                            )},'pageSize':5,'pageIndex':0}"
                         }
                     ){
                         status {

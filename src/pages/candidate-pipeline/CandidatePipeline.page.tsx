@@ -1,9 +1,83 @@
 import React, { useState } from 'react';
 import applicationData from 'common/helpers/applicationData.ts';
-import IApplication from 'types/application.type';
+import * as AuthService from '../../services/auth.service';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { CANDIDATE_SERVICE, ICandidateProfile } from 'pages/candidate/interfaces';
+import { get } from 'lodash';
+import IJob from 'types/job.type';
 
 const CandidatePipeline: React.FC = () => {
-   const [jobs, setJobs] = useState<IApplication[]>(applicationData);
+   const currentUser = AuthService.getCurrentUser();
+   const queryName = 'candidate';
+   const filters = [{ filterField: 'email', filterText: currentUser.email }];
+
+   const client = new ApolloClient({
+      uri: CANDIDATE_SERVICE + '/api/candidate/graphql',
+      cache: new InMemoryCache(),
+   });
+
+   if (currentUser) {
+      console.log(currentUser.email);
+   }
+   {
+      client
+         .query({
+            query: gql`
+            {
+                graphqlClient{
+                    fetch(
+                        requestForm: {
+                            apiName: "${queryName}"
+                            payload:"{'filters':${JSON.stringify(filters).replace(
+                               /"/g,
+                               "'",
+                            )},'pageSize':5,'pageIndex':0}"
+                        }
+                    ){
+                        status {
+                            code
+                            message
+                        }
+                        data
+                    }
+            
+                }
+            }
+`,
+         })
+         .then((result) => {
+            console.log(result);
+            const status = {
+               code: get(result, 'data.graphqlClient.fetch.status.code', null),
+               message: get(result, 'data.graphqlClient.fetch.status.message', null),
+            };
+
+            const list: ICandidateProfile[] = JSON.parse(
+               result.data.graphqlClient.fetch.data,
+            ) as ICandidateProfile[];
+
+            const applicationData: IJob[] = [];
+
+            list.at(0)?.jobs.forEach((job) => {
+               const j: IJob = {
+                  id: job.id,
+                  companyId: job.company_id,
+                  title: job.title,
+                  jobType: job.job_type,
+                  description: job.description,
+                  requirements: job.requirements,
+                  location: job.location,
+                  noOfVacancies: 1,
+                  status: job.status,
+               };
+               applicationData.push(j);
+            });
+
+            setJobs(applicationData);
+         });
+   }
+
+   const [jobs, setJobs] = useState<IJob[]>(applicationData);
 
    const borderColors = {
       applied: 'border-b-4 border-blue-500',

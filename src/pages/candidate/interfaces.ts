@@ -21,6 +21,17 @@ export interface IJobPreference {
    preferredLocation: string;
 }
 
+export interface IJob {
+   id: string;
+   title: string;
+   job_type: string;
+   company_id: string;
+   description: string;
+   requirements: string;
+   location: string;
+   status: string;
+}
+
 export interface ICandidateProfile {
    name: string;
    email: string;
@@ -28,7 +39,7 @@ export interface ICandidateProfile {
    workExperiences: IWorkExperience[];
    educationDetails: IEducationDetail[];
    jobPreferences: IJobPreference[];
+   jobs: IJob[];
 }
 
-export const CANDIDATE_SERVICE =
-   'http://a41866c1e8daa4078be0f25bcd61be4e-1321747920.ap-southeast-1.elb.amazonaws.com';
+export const CANDIDATE_SERVICE = import.meta.env.VITE_CANDIDATE_API_END_POINT;
