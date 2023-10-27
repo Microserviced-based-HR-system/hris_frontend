@@ -1,6 +1,6 @@
 export default interface IApplication {
-   id?: id | null;
-   name: string;
+   id?: number | null;
+   title: string;
    job: string;
    candidate: string;
    applicationDate: string;

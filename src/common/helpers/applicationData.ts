@@ -1,7 +1,8 @@
-import { IApplication } from '../types/application.type';
+import IApplication from 'types/application.type';
 const applicationData: IApplication[] = [
    {
       id: 1,
+      job: 'SE',
       title: 'Job Title 1',
       candidate: 'Candidate1',
       applicationDate: '1 Oct 2023',
@@ -9,6 +10,7 @@ const applicationData: IApplication[] = [
    },
    {
       id: 3,
+      job: 'SE',
       title: 'Job Title 3',
       candidate: 'Candidate2',
       applicationDate: '5 Oct 2023',
@@ -16,6 +18,7 @@ const applicationData: IApplication[] = [
    },
    {
       id: 2,
+      job: 'SE',
       title: 'Job Title 2',
       candidate: 'Candidate1',
       applicationDate: '21 Oct 2023',
