@@ -8,4 +8,6 @@ export default {
    REGISTER: '/register',
    NOT_FOUND: '*',
    DEPARTMENT: '/departments',
+   CANDIDATE: '/candidate',
+   CANDIDATLIST: '/candidatelist',
 } as Paths;

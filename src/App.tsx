@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import './App.css';
 import * as AuthService from './services/auth.service';
 import IUser from './types/user.type';
@@ -9,6 +9,16 @@ import Home from 'pages/home/Home.page';
 import Profile from 'pages/profile/Profile.page';
 import EventBus from 'common/EventBus';
 import RenderAuthLinks from 'components/renderAuthLinks/RenderAuthLinks';
+import Job from 'pages/job/Job.page';
+import JobApplication from 'pages/job/JobApplication';
+import AllEmployees from 'pages/employee/AllEmployees.page';
+import DetailEmployee from 'pages/employee/DetailEmployee.page';
+// import EditEmployee from 'pages/employee/EditEmployee.page';
+// import NewEmployeeForm from 'pages/employee/NewEmployeeForm.page';
+import DeptEmployees from 'pages/employee/DeptEmployees.page';
+import Candidate from 'pages/candidate/candidateprofile';
+import CandidateListing from 'pages/candidate/candidatelisting';
+import CandidatePipeline from 'pages/candidate-pipeline/CandidatePipeline.page';
 
 const App: React.FC = () => {
    const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
@@ -29,6 +39,12 @@ const App: React.FC = () => {
    const logOut = () => {
       AuthService.logout();
       setCurrentUser(undefined);
+   };
+
+   const JobById = () => {
+      const { id } = useParams<{ id: string }>();
+
+      return <Job id={id} />;
    };
 
    return (
@@ -54,6 +70,16 @@ const App: React.FC = () => {
                      <Route path="/login" element={<Login />} />
                      <Route path="/register" element={<Register />} />
                      <Route path="/profile" element={<Profile />} />
+                     <Route path="/candidate" element={<Candidate />} />
+                     <Route path="/jobs/:id" element={<JobById />} />
+                     <Route path="/jobs/:id/application" element={<JobApplication />} />
+                     <Route path="/candidatelist" element={<CandidateListing />} />
+                     <Route path="/myjobs" element={<CandidatePipeline />} />
+                     <Route path="/employees" element={<AllEmployees />} />
+                     <Route path="/detail_employee" element={<DetailEmployee />} />
+                     {/* <Route path="/new_employee" element={<NewEmployeeForm />} />
+                     <Route path="/edit_employee" element={<EditEmployee />} /> */}
+                     <Route path="/department/employees" element={<DeptEmployees />} />
                   </Routes>
                </div>
             </div>
