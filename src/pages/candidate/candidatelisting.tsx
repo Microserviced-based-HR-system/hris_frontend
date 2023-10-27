@@ -11,14 +11,20 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
 const CandidateListing = () => {
    const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
-   const gridStyle = useMemo(() => ({ height: '500px', width: '100%' }), []);
+   const gridStyle = useMemo(() => ({ height: '800px', width: '100%' }), []);
    const [rowData, setRowData] = useState<ICandidateProfile[]>();
    const [columnDefs] = useState<ColDef[]>([
-      { field: 'email' },
+      { field: 'email', filter: 'agTextColumnFilter' },
       { field: 'mobileNo' },
-      { field: 'workExperiences', valueFormatter: bracketsFormatter, resizable: true },
-      { field: 'educationDetails', valueFormatter: bracketsFormatter2, resizable: true },
-      { field: 'jobPreferences', valueFormatter: bracketsFormatter3, resizable: true },
+      { field: 'workExperiences', resizable: true, cellRenderer: cellRendererWorkExperiences },
+      { field: 'educationDetails', resizable: true, cellRenderer: cellRendererEducationDetails },
+      { field: 'jobPreferences', resizable: true, cellRenderer: cellRendererJobPreferences },
+      {
+         field: 'jobs',
+         headerName: 'Applied Jobs',
+         resizable: true,
+         cellRenderer: cellRendererJobs,
+      },
    ]);
    const defaultColDef = useMemo<ColDef>(() => {
       return {
@@ -27,15 +33,58 @@ const CandidateListing = () => {
       };
    }, []);
 
-   function bracketsFormatter(params: ValueFormatterParams) {
-      return JSON.stringify(params.data.workExperiences);
-   }
-   function bracketsFormatter2(params: ValueFormatterParams) {
-      return JSON.stringify(params.data.educationDetails);
+   function cellRendererWorkExperiences(params: ValueFormatterParams) {
+      const arr = params.data.workExperiences;
+      let values = '';
+      for (const workexperience of arr) {
+         values +=
+            'Key Skills: ' +
+            workexperience.keySkills +
+            ', ' +
+            'Total Years In Experience: ' +
+            workexperience.totalExpInYears +
+            ', ' +
+            'Job Title: ' +
+            workexperience.jobTitle +
+            '; ';
+      }
+
+      return values;
    }
 
-   function bracketsFormatter3(params: ValueFormatterParams) {
-      return JSON.stringify(params.data.jobPreferences);
+   function cellRendererEducationDetails(params: ValueFormatterParams) {
+      const arr = params.data.educationDetails;
+      let values = '';
+      for (const edu of arr) {
+         values +=
+            'Highest Qualification: ' +
+            edu.highestQualification +
+            ', ' +
+            'Specialization: ' +
+            edu.specialization +
+            '; ';
+      }
+
+      return values;
+   }
+   function cellRendererJobPreferences(params: ValueFormatterParams) {
+      const arr = params.data.jobPreferences;
+      let values = '';
+      for (const edu of arr) {
+         values +=
+            'Industry: ' + edu.industry + ', ' + 'Preferred Role: ' + edu.preferredRole + '; ';
+      }
+
+      return values;
+   }
+   function cellRendererJobs(params: ValueFormatterParams) {
+      const arr = params.data.jobs ? params.data.jobs : [];
+      let values = '';
+      for (const edu of arr) {
+         values += 'Title: ' + edu.title + ', ' + 'Requirements: ' + edu.requirements + '; ';
+      }
+
+      return values;
    }
 
    const queryName = 'candidate';
