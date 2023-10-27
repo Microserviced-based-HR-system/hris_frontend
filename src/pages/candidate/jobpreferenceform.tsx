@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { get } from 'lodash';
 import { CANDIDATE_SERVICE } from './interfaces';
+import * as AuthService from '../../services/auth.service';
 const JobPreferenceForm: React.FC = () => {
    const [loading, setLoading] = useState<boolean>(false);
    const [message, setMessage] = useState<string>('');
@@ -37,7 +38,7 @@ const JobPreferenceForm: React.FC = () => {
       preferredLocation: string;
    }) => {
       const { industry, preferredRole, preferredLocation } = formValue;
-
+      const currentUser = AuthService.getCurrentUser();
       setMessage('');
       setLoading(true);
       const jobPreference = {
@@ -47,8 +48,8 @@ const JobPreferenceForm: React.FC = () => {
       };
 
       const doucmentToSave = {
-         name: 'Mya Pwint',
-         email: 'myapwint@gmail.com',
+         name: currentUser.username,
+         email: currentUser.email,
          mobileNo: '6512345678',
          jobPreferences: [jobPreference],
       };

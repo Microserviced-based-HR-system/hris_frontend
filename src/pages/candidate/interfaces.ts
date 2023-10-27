@@ -29,6 +29,7 @@ export interface IJob {
    description: string;
    requirements: string;
    location: string;
+   status: string;
 }
 
 export interface ICandidateProfile {
@@ -41,7 +42,4 @@ export interface ICandidateProfile {
    jobs: IJob[];
 }
 
-// export const CANDIDATE_SERVICE =
-//    'http://a41866c1e8daa4078be0f25bcd61be4e-1321747920.ap-southeast-1.elb.amazonaws.com';
-
-export const CANDIDATE_SERVICE = 'http://localhost:8080';
+export const CANDIDATE_SERVICE = import.meta.env.VITE_CANDIDATE_API_END_POINT;

@@ -4,10 +4,11 @@
 // @ts-nocheck
 import httpClient from 'common/http/httpClient';
 import authHeader from './auth-header';
-const jobApiEndPoint = import.meta.env.VITE_JOB_API_END_POINT + 'api/v1';
+const jobApiEndPoint = import.meta.env.VITE_JOB_API_END_POINT;
 const client = new httpClient(jobApiEndPoint);
 
 export const getJobList = () => {
+   alert('endpoint' + jobApiEndPoint);
    return client
       .get('/jobs', { headers: authHeader() })
       .then((response) => response.data)

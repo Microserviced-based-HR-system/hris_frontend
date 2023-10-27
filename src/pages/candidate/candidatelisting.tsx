@@ -81,7 +81,7 @@ const CandidateListing = () => {
       const arr = params.data.jobs ? params.data.jobs : [];
       let values = '';
       for (const edu of arr) {
-         values += 'Title: ' + edu.title + ', ' + 'Requirements: ' + edu.requirements + '; ';
+         values += 'Title: ' + edu.title + '; ';
       }
 
       return values;

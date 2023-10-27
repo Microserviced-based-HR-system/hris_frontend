@@ -11,6 +11,9 @@ import { getJobById } from 'services/job.service';
 // import { createApplication } from 'services/job.service';
 import IJob from 'types/job.type';
 
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import * as AuthService from '../../services/auth.service';
+import { CANDIDATE_SERVICE } from 'pages/candidate/interfaces';
 const Job: React.FC<{ id }> = ({ id }) => {
    const [job, setJob] = useState<IJob>({});
 
@@ -45,10 +48,80 @@ const Job: React.FC<{ id }> = ({ id }) => {
    //     //    },
    //     // );
    //  };
-
+   const currentUser = AuthService.getCurrentUser();
    const handleClosedApplication = (event) => {
       event.preventDefault();
       alert('application has closed');
+   };
+
+   const jobToSave = {
+      id: job.id,
+      title: job.title,
+      job_type: job.job_type,
+      company_id: job.company_id,
+      description: job.description,
+      requirements: job.requirements,
+      location: job.location,
+      status: 'applied',
+   };
+
+   const doucmentToSave = {
+      name: currentUser.username,
+      email: currentUser.email,
+      mobileNo: '6512345678',
+      jobs: [jobToSave],
+   };
+
+   const client = new ApolloClient({
+      uri: CANDIDATE_SERVICE + '/api/candidate/graphql',
+      cache: new InMemoryCache(),
+   });
+   const queryName = 'candidate';
+   const handleApplication = (event) => {
+      event.preventDefault();
+
+      console.log(JSON.stringify(doucmentToSave).replace(/"/g, "'"));
+
+      client
+         .query({
+            query: gql`
+                {
+                    graphqlClient{
+                        save(
+                            requestForm: {
+                                apiName: "${queryName}"
+                                payload:"{'document':${JSON.stringify(doucmentToSave).replace(
+                                   /"/g,
+                                   "'",
+                                )},'pageSize':5,'pageIndex':0}"
+                            }
+                        ){
+                            status {
+                                code
+                                message
+                            }
+                            data
+                        }
+                
+                    }
+                }
+    `,
+         })
+         .then((result) => {
+            console.log(result);
+            const status = {
+               code: get(result, 'data.graphqlClient.save.status.code', null),
+               message: get(result, 'data.graphqlClient.save.status.message', null),
+            };
+
+            if (status?.code !== 200 && status?.code !== 401) {
+               return;
+            }
+
+            return;
+         });
+
+      alert('Your dream has applied' + job.title);
    };
 
    return (
@@ -73,24 +146,45 @@ const Job: React.FC<{ id }> = ({ id }) => {
 
                <div className="hidden sm:block sm:shrink-0">
                   {job.status == 'close' ? (
-                     <button
-                        onClick={handleClosedApplication}
-                        type="submit"
-                        className="bg-gray-500 text-gray-100 p-3 font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-gray-600"
-                        style={{ border: '2px solid', width: '100px', float: 'right' }}
-                     >
-                        Apply
-                     </button>
-                  ) : (
-                     <a href={`/jobs/${job.id}/application`}>
+                     <div>
+                        <a href={`/myjobs`}>
+                           <button
+                              type="submit"
+                              className="bg-indigo-500 text-gray-100 p-3 font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600"
+                              style={{ border: '2px solid', width: '100px', float: 'right' }}
+                           >
+                              My jobs
+                           </button>
+                        </a>
                         <button
+                           onClick={handleClosedApplication}
                            type="submit"
-                           className="bg-indigo-500 text-gray-100 p-3 font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600"
+                           className="bg-gray-500 text-gray-100 p-3 font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-gray-600"
                            style={{ border: '2px solid', width: '100px', float: 'right' }}
                         >
                            Apply
                         </button>
-                     </a>
+                     </div>
+                  ) : (
+                     <div>
+                        <a href={`/myjobs`}>
+                           <button
+                              type="submit"
+                              className="bg-indigo-500 text-gray-100 p-3 font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600"
+                              style={{ border: '2px solid', width: '100px', float: 'right' }}
+                           >
+                              My jobs
+                           </button>
+                        </a>
+                        <button
+                           onClick={handleApplication}
+                           type="submit"
+                           className="bg-pink-500 text-gray-100 p-3 font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600"
+                           style={{ border: '2px solid', width: '100px', float: 'right' }}
+                        >
+                           Apply
+                        </button>
+                     </div>
                   )}
                </div>
             </div>
