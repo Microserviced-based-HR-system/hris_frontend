@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @import url("https://fonts.googleapis.com/css?family=Lato:300,500"); */
+html, body {
+    height: 100%;
+  }
+.boxed-container{
+    max-width: 1440px;
+    margin: 0 auto;
+    box-shadow: 0 24px 48px rgba(17,16,62,0.12);
+    min-height: 70%;
+    min-height: -webkit-calc(100% - 300px);
+    min-height: -moz-calc(100% - 300px);
+    min-height: calc(100% - 300px);          /*min-height hack*/
+}
+.body-wrap{
+    /* background: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; */
+}
+/* .fc-view-harness-active{
+    height: 930px !important;
+} */
+
+:root {
+    --fc-border-color: #EEF1FA;
+    /* --fc-daygrid-event-dot-width: 5px; */
+    
+}
+.fc .fc-col-header-cell-cushion { /* needs to be same precedence */
+padding-top: 5px; /* an override! */
+padding-bottom: 5px; /* an override! */
+}
+
+.fc .fc-daygrid-day-top {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.fc-multimonth-month{
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.05), 0 0 2px 0 rgba(0,0,0,.05);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.05), 0 0 2px 0 rgba(0,0,0,.05);
+}
+
+.fc .fc-non-business {
+    background: #cceffd!important;
+    opacity: .3!important;
+}
+
