@@ -1,4 +1,5 @@
 import httpClient from 'common/http/httpClient';
+import authHeader from './auth-header';
 
 const authApiEndPoint = import.meta.env.VITE_AUTH_API_END_POINT;
 const auth_service_httpClient = new httpClient(authApiEndPoint);

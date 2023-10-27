@@ -30,12 +30,12 @@ const EditEmployee = () => {
             const departmentsResponse = await getDepartments(Employee.companyId);
             const empRolesResponse = await getAllEmpRoles();
 
-            const departments = departmentsResponse.data;
-            const empRoles = empRolesResponse.data;
+            const departments = departmentsResponse.data as IDepartment[];
+            const empRoles = empRolesResponse.data as IEmpRole[];
 
             setDept(departments);
             setEmpRoles(empRoles);
-         } catch (error) {
+         } catch (error: AxiosError) {
             const resMessage =
                (error.response && error.response.data && error.response.data.message) ||
                error.message ||
@@ -47,27 +47,24 @@ const EditEmployee = () => {
       fetchData();
    }, [Employee.companyId]);
 
-   const [formData, setFormData] = useState<IEmployee>(
-      {
-         employeeId: Employee.employeeId,
-         fullName: Employee.fullName,
-         email: Employee.email,
-         companyId: Employee.companyId,
-         departmentId: Employee.departmentId,
-         department: Employee.department || { departmentName: '', departmentId: '' },
-         address: Employee.address,
-         contactNumber: Employee.contactNumber,
-         dob: Employee.dob,
-         startDate: Employee.startDate,
-         endDate: Employee.endDate,
-         jobGradeId: Employee.jobGradeId,
-         bankAccount: Employee.bankAccount,
-         salary: Employee.salary,
-         userId: Employee.userId,
-         empRoles: Employee.empRoles,
-      },
-      [Employee],
-   );
+   const [formData, setFormData] = useState<IEmployee>({
+      employeeId: Employee.employeeId,
+      fullName: Employee.fullName,
+      email: Employee.email,
+      companyId: Employee.companyId,
+      departmentId: Employee.departmentId,
+      department: Employee.department || { departmentName: '', departmentId: '' },
+      address: Employee.address,
+      contactNumber: Employee.contactNumber,
+      dob: Employee.dob,
+      startDate: Employee.startDate,
+      endDate: Employee.endDate,
+      jobGradeId: Employee.jobGradeId,
+      bankAccount: Employee.bankAccount,
+      salary: Employee.salary,
+      userId: Employee.userId,
+      empRoles: Employee.empRoles,
+   });
    const {
       register,
       handleSubmit,
@@ -79,7 +76,7 @@ const EditEmployee = () => {
    const deptOptions = () => {
       return Dept.map((d) => {
          return (
-            <option key={d.departmentId} value={d.departmentId}>
+            <option key={d.departmentId} value={d.departmentName}>
                {d.departmentName}
             </option>
          );
@@ -96,8 +93,13 @@ const EditEmployee = () => {
    const onSubmit = async (data: IEmployee) => {
       try {
          //set formData.empRoles as IEmpRole
-         const newRoles: IEmpRole[] = EmpRoles.find((role) => role.name === data.empRoles);
-         const defaultRole: IEmpRole[] = EmpRoles.find((role) => role.name === 'EMPLOYEE_ROLE');
+         const newRoles: IEmpRole | undefined = EmpRoles.find(
+            (role) => role.name === data.empRoles[0].name,
+         );
+         const defaultRole: IEmpRole = EmpRoles.find((role) => role.name === 'EMPLOYEE_ROLE') || {
+            id: '',
+            name: 'EMPLOYEE_ROLE',
+         };
          if (newRoles) {
             data.empRoles = [newRoles];
          } else {
@@ -105,17 +107,17 @@ const EditEmployee = () => {
          }
          const selectedDept: IDepartment = Dept.find(
             (dep) => dep.departmentId === data.departmentId,
-         );
+         ) as IDepartment;
          const existDept: IDepartment = Dept.find(
             (dep) => dep.departmentId === Employee.departmentId,
-         );
+         ) as IDepartment;
          data.department = selectedDept || existDept;
          updateEmployee(data.companyId, data.employeeId, data)
             .then(() => {
                alert('You have updated successfully');
                navigate('/employees', { state: {} });
             })
-            .catch((error) => {
+            .catch((error: AxiosError) => {
                const resMessage =
                   (error.response && error.response.data && error.response.data.message) ||
                   error.message ||
@@ -123,7 +125,7 @@ const EditEmployee = () => {
                console.log('Error:', resMessage);
                alert('Unable to update employee information');
             });
-      } catch (error) {
+      } catch (error: AxiosError) {
          const resMessage =
             (error.response && error.response.data && error.response.data.message) ||
             error.message ||
@@ -196,7 +198,7 @@ const EditEmployee = () => {
                   <div>
                      <label>Address</label>
                      <textarea
-                        type="textarea"
+                        //type="textarea"
                         style={{ height: '100px' }}
                         placeholder="maximum 500 characters"
                         {...register('address', {
@@ -297,7 +299,7 @@ const EditEmployee = () => {
       </div>
    );
 };
-const ErrorMessage = ({ error }: { error: string }) => {
+const ErrorMessage = ({ error }) => {
    return error ? <small style={{ color: 'red' }}>{error.message}</small> : null;
 };
 export default EditEmployee;

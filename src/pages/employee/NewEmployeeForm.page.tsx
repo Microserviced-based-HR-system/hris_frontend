@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import IEmployee from 'types/employee.type';
 import IUser from 'types/user.type';
+import IEmpRole from 'types/empRole.type';
 import { newEmployee, getEmployeeByEmail } from 'services/employee.service';
 import { getCurrentUser } from 'services/auth.service';
 import { getUserByEmail } from 'services/user.service';
@@ -11,13 +12,13 @@ const NewEmployeeForm = () => {
    const navigate = useNavigate();
    const currentUserEmail = getCurrentUser()?.email;
    // const currentUserEmail = 'ted@gmail.com'; // Test account
-   const [Company, setCompany] = useState<string | undefined>(undefined);
+   const [Company, setCompany] = useState<number | undefined>(undefined);
    const [User, setUser] = useState<IUser | undefined>(undefined);
    const [emailInput, setEmailInput] = useState('');
-   const formData = useState<IEmployee>({
+   const [formData, setFormData] = useState<IEmployee>({
       fullName: '',
       email: '',
-      companyId: '',
+      companyId: 0,
       departmentId: '',
       address: '',
       contactNumber: '',
@@ -28,6 +29,9 @@ const NewEmployeeForm = () => {
       bankAccount: '',
       salary: 123,
       userId: '',
+      employeeId: '',
+      empRoles: [{ id: '', name: '' }],
+      department: { departmentName: '', departmentId: '', companyId: 0, departmentDesc: '' },
    });
    const {
       register,
@@ -44,7 +48,7 @@ const NewEmployeeForm = () => {
             const data: IEmployee = response.data as IEmployee;
             // Ensure that data is not undefined and companyId is defined
             if (data && data.companyId) {
-               setCompany(data.companyId);
+               setCompany(data.companyId | 1);
             } else {
                console.log('Company ID not found in response data');
             }
@@ -83,10 +87,14 @@ const NewEmployeeForm = () => {
 
    const onSubmit = (data: IEmployee) => {
       fetchUserByEmail(); //find userId for new employee
-      data.companyId = Company;
-      data.userId = User.id;
+      if (Company !== undefined) {
+         data.companyId = Company;
+      }
+      if (User !== undefined && User !== null && User.id !== undefined && User.id !== null) {
+         data.userId = User.id;
+      }
       console.log(data);
-      newEmployee(data, Company)
+      newEmployee(data, data.companyId)
          .then(() => {
             alert('You have successfully submitted the form');
             navigate('/employees', { state: {} });
@@ -175,7 +183,7 @@ const NewEmployeeForm = () => {
                   <div>
                      <label>Address</label>
                      <textarea
-                        type="textarea"
+                        //   type="textarea"
                         style={{ height: '100px' }}
                         placeholder="maximum 500 characters"
                         {...register('address', {
@@ -206,7 +214,7 @@ const NewEmployeeForm = () => {
    );
 };
 
-const ErrorMessage = ({ error }: { error: string }) => {
+const ErrorMessage = ({ error }) => {
    return error ? <small style={{ color: 'red' }}>{error.message}</small> : null;
 };
 

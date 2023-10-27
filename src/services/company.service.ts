@@ -12,7 +12,7 @@ export const getCompanyById = (id: string) => {
    return emp_service_httpClient.get('/company/' + id, { headers: authHeader() });
 };
 
-export const getAllCompanyEmployees = (id: string) => {
+export const getAllCompanyEmployees = (id: number) => {
    return emp_service_httpClient.get('/company/' + id + '/employees', { headers: authHeader() });
 };
 
@@ -26,7 +26,7 @@ export const getEmployeeByDepartmentId = (deptId: string) => {
    });
 };
 
-export const getDepartments = (compId: string) => {
+export const getDepartments = (compId: number) => {
    return emp_service_httpClient.get('/company/' + compId + '/departments', {
       headers: authHeader(),
    });

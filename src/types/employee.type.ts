@@ -1,6 +1,7 @@
 import IDepartment from 'types/department.type';
+import IEmpRole from 'types/empRole.type';
 export default interface IEmployee {
-   employeeId?: string | null;
+   employeeId: string;
    fullName: string;
    email: string;
    companyId: number;
@@ -14,6 +15,6 @@ export default interface IEmployee {
    bankAccount: string;
    salary: number;
    userId: string;
-   empRoles: Array<string>;
+   empRoles: Array<IEmpRole>;
    department: IDepartment;
 }

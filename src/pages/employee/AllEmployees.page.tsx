@@ -70,12 +70,12 @@ const AllEmployees = () => {
          </div>
          <ListGroup>
             {Employee.map((data) => (
-               <div className="border" key={data.employeeId}>
+               <div className="border" key={data?.employeeId}>
                   <ListGroup.Item className="text-xl my-8 pl-8 btn">
                      <div className="grid grid-flow-row-dense grid-cols-4 gap-1 ...">
                         {' '}
-                        {data.fullName}
-                        <div className="text-base col-start-2">{data.email}</div>
+                        {data?.fullName}
+                        <div className="text-base col-start-2">{data?.email}</div>
                         <div
                            className="text-base col-start-3 btn underline"
                            title="Department Details"

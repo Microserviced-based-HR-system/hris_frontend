@@ -29,7 +29,7 @@ export const newEmployee = async (emp: IEmployee, companyId: number) => {
          data: emp,
       });
 
-      if (response.data.token) {
+      if (response.data as IEmployee) {
          localStorage.setItem('newEmployee', JSON.stringify(response.data));
       }
       return response.data;
@@ -49,7 +49,7 @@ export const updateEmployee = async (companyId: number, employeeId: string, emp:
          },
       );
 
-      if (response.data.token) {
+      if (response.data as IEmployee) {
          localStorage.setItem('updateEmployee', JSON.stringify(response.data));
       }
       return response.data;
