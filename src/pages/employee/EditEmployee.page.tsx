@@ -6,6 +6,7 @@ import IEmpRole from 'types/empRole.type';
 import { getDepartments } from 'services/company.service';
 import { updateEmployee, getAllEmpRoles } from 'services/employee.service';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 const EditEmployee = () => {
    const location = useLocation();
@@ -24,26 +25,53 @@ const EditEmployee = () => {
    };
 
    useEffect(() => {
-      const fetchData = async () => {
-         try {
-            const departmentsResponse = await getDepartments(Employee.companyId);
-            const empRolesResponse = await getAllEmpRoles();
-
-            const departments = departmentsResponse.data as IDepartment[];
-            const empRoles = empRolesResponse.data as IEmpRole[];
-
-            setDept(departments);
-            setEmpRoles(empRoles);
-         } catch (error) {
+      getDepartments(Employee.companyId).then(
+         (response) => {
+            const data: IDepartment[] = response.data as IDepartment[];
+            setDept(data);
+         },
+         (error) => {
             const resMessage =
                (error.response && error.response.data && error.response.data.message) ||
                error.message ||
                error.toString();
             console.log(resMessage);
-         }
-      };
+         },
+      );
+      getAllEmpRoles().then(
+         (response) => {
+            const data: IEmpRole[] = response.data as IEmpRole[];
+            setEmpRoles(data);
+         },
+         (error) => {
+            const resMessage =
+               (error.response && error.response.data && error.response.data.message) ||
+               error.message ||
+               error.toString();
+            console.log(resMessage);
+         },
+      );
+      // --having error on type declaration for npm run build or npm run lint
+      //       const fetchData = async () => {
+      //          try {
+      //             const departmentsResponse = await getDepartments(Employee.companyId);
+      //             const empRolesResponse = await getAllEmpRoles();
+      //
+      //             const departments = departmentsResponse.data as IDepartment[];
+      //             const empRoles = empRolesResponse.data as IEmpRole[];
+      //
+      //             setDept(departments);
+      //             setEmpRoles(empRoles);
+      //          } catch (error) {
+      //             const resMessage =
+      //                (error.response && error.response.data && error.response.data.message) ||
+      //                error.message ||
+      //                error.toString();
+      //             console.log(resMessage);
+      //          }
+      //      }
 
-      fetchData();
+      //     fetchData();
    }, [Employee.companyId]);
 
    const [formData, setFormData] = useState<IEmployee>({
@@ -90,48 +118,48 @@ const EditEmployee = () => {
    };
 
    const onSubmit = async (data: IEmployee) => {
-      try {
-         //set formData.empRoles as IEmpRole
-         const newRoles: IEmpRole | undefined = EmpRoles.find(
-            (role) => role.name === data.empRoles[0].name,
-         );
-         const defaultRole: IEmpRole = EmpRoles.find((role) => role.name === 'EMPLOYEE_ROLE') || {
-            id: '',
-            name: 'EMPLOYEE_ROLE',
-         };
-         if (newRoles) {
-            data.empRoles = [newRoles];
-         } else {
-            data.empRoles = [defaultRole];
-         }
-         const selectedDept: IDepartment = Dept.find(
-            (dep) => dep.departmentId === data.departmentId,
-         ) as IDepartment;
-         const existDept: IDepartment = Dept.find(
-            (dep) => dep.departmentId === Employee.departmentId,
-         ) as IDepartment;
-         data.department = selectedDept || existDept;
-         updateEmployee(data.companyId, data.employeeId, data)
-            .then(() => {
-               alert('You have updated successfully');
-               navigate('/employees', { state: {} });
-            })
-            .catch((error) => {
-               const resMessage =
-                  (error.response && error.response.data && error.response.data.message) ||
-                  error.message ||
-                  error.toString();
-               console.log('Error:', resMessage);
-               alert('Unable to update employee information');
-            });
-      } catch (error) {
-         const resMessage =
-            (error.response && error.response.data && error.response.data.message) ||
-            error.message ||
-            error.toString();
-         console.log('Error:', resMessage);
-         alert('Error in employee information to be updated');
+      //      try {
+      //set formData.empRoles as IEmpRole
+      const newRoles: IEmpRole | undefined = EmpRoles.find(
+         (role) => role.name === data.empRoles[0].name,
+      );
+      const defaultRole: IEmpRole = EmpRoles.find((role) => role.name === 'EMPLOYEE_ROLE') || {
+         id: '',
+         name: 'EMPLOYEE_ROLE',
+      };
+      if (newRoles) {
+         data.empRoles = [newRoles];
+      } else {
+         data.empRoles = [defaultRole];
       }
+      const selectedDept: IDepartment = Dept.find(
+         (dep) => dep.departmentId === data.departmentId,
+      ) as IDepartment;
+      const existDept: IDepartment = Dept.find(
+         (dep) => dep.departmentId === Employee.departmentId,
+      ) as IDepartment;
+      data.department = selectedDept || existDept;
+      updateEmployee(data.companyId, data.employeeId, data)
+         .then(() => {
+            alert('You have updated successfully');
+            navigate('/employees', { state: {} });
+         })
+         .catch((error) => {
+            const resMessage =
+               (error.response && error.response.data && error.response.data.message) ||
+               error.message ||
+               error.toString();
+            console.log('Error:', resMessage);
+            alert('Unable to update employee information');
+         });
+      //       } catch (error: unknown) {
+      //          const resMessage =
+      //             (error.response && error.response.data && error.response.data.message) ||
+      //             error.message ||
+      //             error.toString();
+      //          console.log('Error:', resMessage);
+      //          alert('Error in employee information to be updated');
+      //       }
    };
    return (
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-20">
@@ -148,7 +176,7 @@ const EditEmployee = () => {
                         {...register('fullName', { required: '*this field cannot be empty' })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.fullName} />
+                     <small style={{ color: 'red' }}>{errors.fullName?.message}</small>
                   </div>
                   <div>
                      <label>Email</label>
@@ -158,7 +186,7 @@ const EditEmployee = () => {
                         value={Employee.email}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.email} />
+                     <small style={{ color: 'red' }}>{errors.email?.message}</small>
                   </div>
                   <div>
                      <label>Contact Number</label>
@@ -167,7 +195,7 @@ const EditEmployee = () => {
                         {...register('contactNumber', { required: '*this field cannot be empty' })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.contactNumber} />
+                     <small style={{ color: 'red' }}>{errors.contactNumber?.message}</small>
                   </div>
                   <div>
                      <label>Date of Birth</label>
@@ -183,7 +211,7 @@ const EditEmployee = () => {
                         }}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.dob} />
+                     <small style={{ color: 'red' }}>{errors.dob?.message}</small>
                   </div>
                   <div>
                      <label>Bank Account</label>
@@ -192,7 +220,7 @@ const EditEmployee = () => {
                         {...register('bankAccount', { required: '*this field cannot be empty' })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.bankAccount} />
+                     <small style={{ color: 'red' }}>{errors.bankAccount?.message}</small>
                   </div>
                   <div>
                      <label>Address</label>
@@ -206,7 +234,7 @@ const EditEmployee = () => {
                         })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.address} />
+                     <small style={{ color: 'red' }}>{errors.address?.message}</small>
                   </div>
                   <br></br>
                   <div className="text-l text-center">------Employment Details------</div>
@@ -224,7 +252,7 @@ const EditEmployee = () => {
                         }}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.dob} />
+                     <small style={{ color: 'red' }}>{errors.dob?.message}</small>
                   </div>
                   <div>
                      <label>Employment End Date</label>
@@ -240,7 +268,7 @@ const EditEmployee = () => {
                         }}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.dob} />
+                     <small style={{ color: 'red' }}>{errors.endDate?.message}</small>
                   </div>
                   <div>
                      <label>Department</label>
@@ -254,7 +282,7 @@ const EditEmployee = () => {
                            {(formData.department && formData.department.departmentName) || null}
                         </option>
                      </select>
-                     <ErrorMessage error={errors.departmentId} />
+                     <small style={{ color: 'red' }}>{errors.departmentId?.message}</small>
                   </div>
                   <div>
                      <label>Job Position</label>
@@ -263,7 +291,7 @@ const EditEmployee = () => {
                         {...register('jobGradeId', { required: false })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.fullName} />
+                     <small style={{ color: 'red' }}>{errors.fullName?.message}</small>
                   </div>
                   <div>
                      <label>Employee Role</label>
@@ -298,7 +326,7 @@ const EditEmployee = () => {
       </div>
    );
 };
-const ErrorMessage = ({ error }) => {
-   return error ? <small style={{ color: 'red' }}>{error.message}</small> : null;
-};
+// const ErrorMessage = ({ error }) => {
+//    return error ? <small style={{ color: 'red' }}>{error.message}</small> : null;
+// };
 export default EditEmployee;

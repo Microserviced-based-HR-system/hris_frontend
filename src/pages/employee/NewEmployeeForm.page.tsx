@@ -122,7 +122,7 @@ const NewEmployeeForm = () => {
                         {...register('fullName', { required: '*this field cannot be empty' })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.fullName} />
+                     <small style={{ color: 'red' }}>{errors.fullName?.message}</small>
                   </div>
                   <div>
                      <label>Email</label>
@@ -133,7 +133,7 @@ const NewEmployeeForm = () => {
                         onChange={(e) => setEmailInput(e.target.value)}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.email} />
+                     <small style={{ color: 'red' }}>{errors.email?.message}</small>
                   </div>
                   <div>
                      <label>Contact Number</label>
@@ -142,7 +142,7 @@ const NewEmployeeForm = () => {
                         {...register('contactNumber', { required: '*this field cannot be empty' })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.contactNumber} />
+                     <small style={{ color: 'red' }}>{errors.contactNumber?.message}</small>
                   </div>
                   <div>
                      <label>Date of Birth</label>
@@ -151,7 +151,7 @@ const NewEmployeeForm = () => {
                         {...register('dob', { required: false })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.dob} />
+                     <small style={{ color: 'red' }}>{errors.dob?.message}</small>
                   </div>
                   <div>
                      <label>Employment Start Date</label>
@@ -160,7 +160,7 @@ const NewEmployeeForm = () => {
                         {...register('startDate', { required: '*this field cannot be empty' })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.startDate} />
+                     <small style={{ color: 'red' }}>{errors.startDate?.message}</small>
                   </div>
                   <div>
                      <label>Bank Account</label>
@@ -169,7 +169,7 @@ const NewEmployeeForm = () => {
                         {...register('bankAccount', { required: '*this field cannot be empty' })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.bankAccount} />
+                     <small style={{ color: 'red' }}>{errors.bankAccount?.message}</small>
                   </div>
                   <div>
                      <label>Job Position</label>
@@ -178,7 +178,7 @@ const NewEmployeeForm = () => {
                         {...register('jobGradeId', { required: false })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.fullName} />
+                     <small style={{ color: 'red' }}>{errors.fullName?.message}</small>
                   </div>
                   <div>
                      <label>Address</label>
@@ -192,7 +192,7 @@ const NewEmployeeForm = () => {
                         })}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 light:bg-gray-700 light:border-gray-600 light:placeholder-gray-400 light:text-black light:focus:ring-blue-500 dark:focus:border-blue-500"
                      />
-                     <ErrorMessage error={errors.address} />
+                     <small style={{ color: 'red' }}>{errors.address?.message}</small>
                   </div>
                   <div>
                      <br></br>
@@ -214,8 +214,8 @@ const NewEmployeeForm = () => {
    );
 };
 
-const ErrorMessage = ({ error }) => {
-   return error ? <small style={{ color: 'red' }}>{error.message}</small> : null;
-};
+// const ErrorMessage = ({ error }) => {
+//    return error ? <small style={{ color: 'red' }}>{error.message}</small> : null;
+// };
 
 export default NewEmployeeForm;
