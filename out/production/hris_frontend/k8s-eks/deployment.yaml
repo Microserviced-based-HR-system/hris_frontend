@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui
+  labels:
+    app.kubernetes.io/created-by: group1-nus
+    app.kubernetes.io/type: app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ui
+      app.kubernetes.io/instance: ui
+      app.kubernetes.io/component: service
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: "8000"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/name: ui
+        app.kubernetes.io/instance: ui
+        app.kubernetes.io/component: service
+        app.kubernetes.io/created-by: group1-nus
+    spec:
+      serviceAccountName: ui
+      containers:
+      - name: ui
+        envFrom:
+        - configMapRef:
+            name: ui
+        image: 876708361421.dkr.ecr.ap-southeast-1.amazonaws.com/hris_frontend:v1
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always

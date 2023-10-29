@@ -13,7 +13,7 @@
      "eslint:recommended",
      "plugin:react/recommended",
      "plugin:@typescript-eslint/recommended",
-     "prettier"
+     "prettier" // --> Add this line
   ],
   "overrides": [],
  "parser": "@typescript-eslint/parser",
@@ -22,6 +22,9 @@
      "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
+ //  "rules": {
+ //     "react/react-in-jsx-scope": "off"
+ //  },
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
