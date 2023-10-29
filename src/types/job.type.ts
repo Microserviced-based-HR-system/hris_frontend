@@ -8,4 +8,5 @@ export default interface IJob {
    location: string;
    noOfVacancies: number;
    status: string;
+   candidate: string;
 }

@@ -78,8 +78,6 @@ const Job: React.FC<{ id }> = ({ id }) => {
    });
    const queryName = 'candidate';
    const handleApplication = (event) => {
-      event.preventDefault();
-
       console.log(JSON.stringify(doucmentToSave).replace(/"/g, "'"));
 
       client
